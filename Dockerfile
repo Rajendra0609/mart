@@ -5,13 +5,13 @@ FROM node:latest AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+COPY . /app
 
 # Install dependencies
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # Copy the rest of the application code
-COPY . .
+
 
 # Build the frontend
 RUN npm run build
@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the built frontend files from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY /app/frontend/build/* /usr/share/nginx/html
 
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
