@@ -1,12 +1,10 @@
 # Use a Node.js base image
 FROM node:latest AS build
 
-# Copy package.json and package-lock.json to the working directory
-COPY . /app
-
 WORKDIR /app
 
-
+RUN apt install -y git 
+RUN git clone git clone https://github.com/Rajendra0609/mart.git
 # Install dependencies
 RUN npm install
 
